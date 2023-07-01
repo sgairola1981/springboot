@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"path": "../../../../.git"
+		},
+		{
+			"path": "../../../../.vscode"
+		},
+		{
+			"path": "../../../../department"
+		},
+		{
+			"path": "../../../../elk"
+		},
+		{
+			"path": "../../../../eurekaserver"
+		},
+		{
+			"path": "../../../../gairolaspringmvc"
+		},
+		{
+			"path": "../../../../gateway"
+		},
+		{
+			"path": "../../../../login"
+		},
+		{
+			"path": "../../../../react_gairola"
+		},
+		{
+			"path": "../../../../springtest"
+		},
+		{
+			"path": "../../../../userservice"
+		},
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.debug.settings.onBuildFailureProceed": true
+	}
+}

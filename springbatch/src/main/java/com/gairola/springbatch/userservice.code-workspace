@@ -1,0 +1,54 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../userservice"
+		},
+		{
+			"path": "../../../../../../../webfluxdemo"
+		},
+		{
+			"path": "../../../../../../../springtest"
+		},
+		{
+			"path": "../../../../../../../webflex"
+		},
+		{
+			"path": "../../../../../../../.git"
+		},
+		{
+			"path": "../../../../../../../gatewayapi"
+		},
+		{
+			"path": "../../../../../../../react_gairola"
+		},
+		{
+			"path": "../../../../../../../gairolaspringmvc"
+		},
+		{
+			"path": "../../../../../../../elk"
+		},
+		{
+			"path": "../../../../../../../login"
+		},
+		{
+			"path": "../../../../../../../.vscode"
+		},
+		{
+			"path": "../../../../../../../eurekaserver"
+		},
+		{
+			"path": "../../../../../../../gateway"
+		},
+		{
+			"path": "../../../../../../../department"
+		},
+		{
+			"name": "springbatch",
+			"path": "../../../../../.."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.compile.nullAnalysis.mode": "automatic"
+	}
+}
