@@ -1,8 +1,8 @@
 package com.gairola.inventory.inventoryservice.repo;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
+
+import com.gairola.inventory.inventoryservice.model.Inventory;
 
 public interface InventoryRepository extends CrudRepository<Inventory, Long> {
 

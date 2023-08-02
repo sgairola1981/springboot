@@ -1,4 +1,4 @@
-package com.gairola.order.orderservice.model;
+package com.gairola.payment.paymentservice.model;
 
 public class CustomerOrder {
 

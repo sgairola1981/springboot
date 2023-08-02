@@ -1,4 +1,4 @@
-package com.gairola.payment.paymentservice.model;
+package com.gairola.inventory.inventoryservice.model;
 
 public class PaymentEvent {
 

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gairola.inventory.inventoryservice.model.Inventory;
+import com.gairola.inventory.inventoryservice.model.InventoryEvent;
 import com.gairola.inventory.inventoryservice.model.PaymentEvent;
 import com.gairola.inventory.inventoryservice.repo.InventoryRepository;
 

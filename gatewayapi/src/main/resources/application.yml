@@ -1,0 +1,23 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: mainModule
+        uri: http://localhost:8889/
+        predicates:
+        - Path=/main/**
+      - id: consumerModule
+        uri: http://localhost:8082/
+        predicates:
+        - Path=/dataService/**
+      - id: employeeModule
+        uri: http://localhost:8081/
+        predicates:
+        - Path=/employee/**
+        
+
+
+        
