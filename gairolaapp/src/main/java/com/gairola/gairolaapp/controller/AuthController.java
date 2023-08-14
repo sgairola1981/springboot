@@ -1,10 +1,14 @@
 package com.gairola.gairolaapp.controller;
 
 import jakarta.validation.Valid;
+import reactor.core.publisher.Flux;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +18,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.gairola.gairolaapp.dto.UserDto;
 import com.gairola.gairolaapp.entity.Book;
 import com.gairola.gairolaapp.entity.User;
+import com.gairola.gairolaapp.service.BookService;
 import com.gairola.gairolaapp.service.UserService;
+import com.gairola.gairolaapp.util.RestClientUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,18 +33,23 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/main")
 public class AuthController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @Autowired
+    WebClient webClient;
     private UserService userService;
     @Autowired
     private RestTemplate restTemplate;
 
-    private Book forObject;
+    private RestClientUtil client;
+
+    private BookService bookService;
+    private Flux<Book> bodyToFlux;
 
     public AuthController(UserService userService) {
         this.userService = userService;
@@ -56,9 +68,25 @@ public class AuthController {
 
     @Operation(summary = "This is to call service")
     @GetMapping("/service")
-    public String ServiceForm() {
+    public String ServiceForm() throws URISyntaxException {
+
         return "service";
     }
+
+    /*
+     * @Operation(summary = "This is to call service")
+     * 
+     * @GetMapping("/service")
+     * public Flux<Book> findAll() {
+     * bodyToFlux = webClient.get()
+     * .uri("/http://localhost:9000/book/all")
+     * .retrieve()
+     * .bodyToFlux(Book.class);
+     * bodyToFlux.doOnNext(System.out::println).blockLast();
+     * 
+     * return bodyToFlux;
+     * }
+     */
 
     @Operation(summary = "This is to use to home page")
     @GetMapping("/home")
@@ -66,12 +94,19 @@ public class AuthController {
         // ResponseEntity<Book> responseEntity = restTemplate
         // .getForEntity("http://localhost:9000/book/501", Book.class);
 
-        Object[] Book = restTemplate.getForObject("http://localhost:9000/book/all", Object[].class);
+        Book[] books = restTemplate.getForObject("http://localhost:9000/book/all",
+                Book[].class);
 
         System.out.println("*************************************");
 
-        System.out.println(Book[1].toString());
-        // System.out.println(forObject.getBookName());
+        for (Book e : books) {
+            System.out.println(e);
+        }
+        String url = "http://localhost:9000/book/{bookId}";
+        Integer bookId = 501;
+        Book book = restTemplate.getForObject(url, Book.class, bookId);
+        System.out.println(book.toString());
+
         return "home";
     }
 
