@@ -1,5 +1,20 @@
-<footer>
-	<nav class="navbar navbar-inverse navbar-fixed-bottom">
-		<a class="navbar-brand" href="https://josdem.io">© josdem.io 2017</a>
-	</nav>
-</footer>
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <th:block th:fragment="footer">
+	<footer>
+        <div class="container">
+            <p>
+                 &copy; Memorynotfound.com
+                <span sec:authorize="isAuthenticated()" style="display: inline-block;">
+                    | Logged user: <span sec:authentication="name"></span> |
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                    <a th:href="@{/logout}">Sign Out</a>
+                </span>
+            </p>
+        </div>
+    </footer>
+  </th:block>
+  </body>
+  </html>

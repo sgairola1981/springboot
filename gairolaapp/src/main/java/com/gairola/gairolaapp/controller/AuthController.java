@@ -1,7 +1,6 @@
 package com.gairola.gairolaapp.controller;
 
 import jakarta.validation.Valid;
-import reactor.core.publisher.Flux;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import com.gairola.gairolaapp.dto.UserDto;
 import com.gairola.gairolaapp.entity.Book;
@@ -40,8 +38,7 @@ import java.util.List;
 @RequestMapping("/main")
 public class AuthController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    WebClient webClient;
+
     private UserService userService;
     @Autowired
     private RestTemplate restTemplate;
@@ -49,7 +46,6 @@ public class AuthController {
     private RestClientUtil client;
 
     private BookService bookService;
-    private Flux<Book> bodyToFlux;
 
     public AuthController(UserService userService) {
         this.userService = userService;
@@ -73,21 +69,6 @@ public class AuthController {
         return "service";
     }
 
-    /*
-     * @Operation(summary = "This is to call service")
-     * 
-     * @GetMapping("/service")
-     * public Flux<Book> findAll() {
-     * bodyToFlux = webClient.get()
-     * .uri("/http://localhost:9000/book/all")
-     * .retrieve()
-     * .bodyToFlux(Book.class);
-     * bodyToFlux.doOnNext(System.out::println).blockLast();
-     * 
-     * return bodyToFlux;
-     * }
-     */
-
     @Operation(summary = "This is to use to home page")
     @GetMapping("/home")
     public String ServiceHome() {
@@ -107,7 +88,9 @@ public class AuthController {
         Book book = restTemplate.getForObject(url, Book.class, bookId);
         System.out.println(book.toString());
 
-        return "home";
+        // return "home";
+        return "formdata";
+
     }
 
     // handler method to handle user registration request
