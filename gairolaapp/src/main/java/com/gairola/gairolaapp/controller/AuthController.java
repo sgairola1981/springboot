@@ -102,6 +102,14 @@ public class AuthController {
         return "register";
     }
 
+    // handler method to handle user registration request
+    @Operation(summary = "This is to Regester a new user in the database")
+    @GetMapping("/user")
+    public String userForm(Model model) {
+
+        return "userform";
+    }
+
     // handler method to handle register user form submit request
     @Operation(summary = "This is save user information in the database")
     @ApiResponses(value = {

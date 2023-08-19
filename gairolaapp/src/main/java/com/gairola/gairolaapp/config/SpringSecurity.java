@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -23,6 +24,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SpringSecurity {
 
+        @Autowired
+        private AccessDeniedHandler accessDeniedHandler;
         @Autowired
         private UserDetailsService userDetailsService;
 
@@ -50,10 +53,13 @@ public class SpringSecurity {
                                                 .requestMatchers("/main/index").permitAll()
                                                 .requestMatchers("/main/service").permitAll()
                                                 .requestMatchers("/main/home").permitAll()
+                                                .requestMatchers("/data/**").permitAll()
+                                                // .requestMatchers("/data/**").hasRole("USER")
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                                 .requestMatchers("/main/users").hasRole("ADMIN")
                                                 .requestMatchers("/", "/js/**", "/css/**", "/img/**", "/webjars/**")
-                                                .permitAll())
+                                                .permitAll()
+                                                .anyRequest().authenticated())
                                 .formLogin(
                                                 form -> form
                                                                 .loginPage("/main/login")
@@ -65,7 +71,12 @@ public class SpringSecurity {
                                                                 .logoutRequestMatcher(
                                                                                 new AntPathRequestMatcher(
                                                                                                 "/main/logout"))
-                                                                .permitAll());
+                                                                .permitAll()
+                                // .and()
+                                // .exceptionHandling()
+                                // .accessDeniedHandler(accessDeniedHandler)
+                                );
+
                 return http.build();
         }
 
