@@ -36,13 +36,28 @@
                <input type="submit" class="btn btn-primary" value="Create User">
             </form>
             <table class="table table-striped table-bordered">
+
                 <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Role</th>
-                    <th>Created At</th>
+                    <td>
+                        <a th:href="@{'/data/page/2' + '?sortField=id&sortDir=2'}">ID</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/data/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">First Name</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/data/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">Last Name</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/data/page/' + ${currentPage} + '?sortField=role&sortDir=' + ${reverseSortDir}}">Role</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/data/page/' + ${currentPage} + '?sortField=createdAt&sortDir=' + ${reverseSortDir}}">Created At</a>
+                    </td>
+                    
+                    <td>Update</td>
+                    <td>Delete</td>
                 </tr>
+               
                 <tr th:if="${#lists.isEmpty(users)}">
                     <td colspan="5">No Records found. Add some...!</td>
                 </tr>
@@ -59,7 +74,36 @@
 						</td>
 
                 </tr>
-            </table>     
+            </table> 
+            <div>&nbsp;</div>
+	<div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
+	<div>&nbsp;</div>
+	<div th:if="${totalPages > 1}">
+		Total Items: [[${totalItems}]]
+		&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{'/data/page/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+		&nbsp;&nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{'/data/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+		<span th:unless="${currentPage > 1}">Previous</span>
+		
+		&nbsp;&nbsp;
+		
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			<a th:if="${currentPage != i}" th:href="@{'/data/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+			<span th:unless="${currentPage != i}">[[${i}]]</span>
+			&nbsp;
+		</span>
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/data/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+		<span th:unless="${currentPage < totalPages}">Next</span>
+		&nbsp;&nbsp;
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/data/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span>
+	</div>    
     </div>
 </div>
 </body>

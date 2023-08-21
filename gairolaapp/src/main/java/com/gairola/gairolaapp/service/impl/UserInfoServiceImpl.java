@@ -3,6 +3,10 @@ package com.gairola.gairolaapp.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gairola.gairolaapp.entity.UserInfo;
@@ -41,6 +45,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo getUserById(Integer userId) {
         return userInfoRepository.findById(userId).get();
 
+    }
+
+    @Override
+    public Page<UserInfo> listAll(int pageNum, String sortField, String sortDir) {
+        Pageable pageable = PageRequest.of(pageNum - 1, 5,
+                sortDir.equals("asc") ? Sort.by(sortField).ascending()
+                        : Sort.by(sortField).descending());
+        return userInfoRepository.findAll(pageable);
     }
 
 }
