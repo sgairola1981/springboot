@@ -53,7 +53,7 @@ public class AuthController {
 
     @GetMapping("/index")
     public String home() {
-        return "index";
+        return "login";
     }
 
     @Operation(summary = "This is to login form .")

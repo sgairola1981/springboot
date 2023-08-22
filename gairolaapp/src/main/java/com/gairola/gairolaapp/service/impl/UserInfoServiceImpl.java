@@ -48,10 +48,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public Page<UserInfo> listAll(int pageNum, String sortField, String sortDir) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 5,
-                sortDir.equals("asc") ? Sort.by(sortField).ascending()
-                        : Sort.by(sortField).descending());
+    public Page<UserInfo> listAll(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+
         return userInfoRepository.findAll(pageable);
     }
 

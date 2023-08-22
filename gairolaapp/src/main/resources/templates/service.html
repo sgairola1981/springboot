@@ -3,26 +3,56 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 <head>
-    <title>Login</title>
+    <meta charset="utf-8" />
+        <title>Spring Boot + JPA + Datatables</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+        <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+       <!-- <script src="/js/datatable.js"></script>-->
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-<div class="container">
-    <div class="row col-md-8 offset-md-2">
-        <div class="card">
-            <div th:if="${param.success}">
-                <div class="alert alert-info">test data
-                    to our app!</div>
-            </div>
-            <div class="card-header">
-                <h2 class="text-center">Data</h2>
-            </div>
-            
-                
-            </div>
-        </div>
-    </div>
-</div>
+ 
+        <h1>Employees Table</h1>
+        <table id="employeesTable" class="display">
+          
+           <!-- Header Table -->
+           <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    
+                </tr>
+            </thead>
+            <!-- Footer Table -->
+            <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    
+                </tr>
+            </tfoot>
+        </table>
+        <script>
+			$(document).ready(function() {
+				$("#employeesTable").DataTable({
+                      ajax : '/emp/employees',
+                 "aoColumns": [
+               { "mData": "id"},
+               { "mData": "firstName" },
+                 { "mData": "lastName" },
+                 { "mData": "email" }
+    				]
+				});
+			})
+		</script>  
+
 </div>
 </body>
 </html>

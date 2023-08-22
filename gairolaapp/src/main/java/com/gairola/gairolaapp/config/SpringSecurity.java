@@ -55,6 +55,7 @@ public class SpringSecurity {
                                                 // .requestMatchers("/main/home").permitAll()
                                                 // .requestMatchers("/data/**").permitAll()
                                                 .requestMatchers("/data/**").hasRole("ADMIN")
+                                                .requestMatchers("/emp/**").hasRole("ADMIN")
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                                 .requestMatchers("/main/users").hasRole("ADMIN")
                                                 .requestMatchers("/", "/js/**", "/css/**", "/img/**", "/webjars/**")

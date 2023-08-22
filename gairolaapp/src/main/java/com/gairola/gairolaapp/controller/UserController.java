@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.gairola.gairolaapp.entity.UserInfo;
 import com.gairola.gairolaapp.service.UserInfoService;
 
@@ -67,25 +69,27 @@ public class UserController {
 
     }
 
-    @RequestMapping("/page/{pageNum}")
-    public String viewPage(Model model,
-            @PathVariable(name = "pageNum") int pageNum,
-            @Param("sortField") String sortField,
-            @Param("sortDir") String sortDir) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA" + pageNum + "---" + sortField + "---" + sortDir);
-        Page<UserInfo> page = userService.listAll(pageNum, sortField, sortDir);
-        List<UserInfo> listProducts = page.getContent();
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+            @RequestParam("sortField") String sortField,
+            @RequestParam("sortDir") String sortDir,
+            Model model) {
+        int pageSize = 5;
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA" + pageNo + "---" + sortField + "---" + sortDir);
+
+        Page<UserInfo> page = userService.listAll(pageNo, pageSize, sortField, sortDir);
+        List<UserInfo> listEmployees = page.getContent();
         System.out.println("888888888888888888888888");
-        model.addAttribute("currentPage", pageNum);
+
+        model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
-        model.addAttribute("userInfo", listProducts);
-
+        model.addAttribute("users", listEmployees);
+        model.addAttribute("userInfo", new UserInfo());
         return "userform";
     }
 

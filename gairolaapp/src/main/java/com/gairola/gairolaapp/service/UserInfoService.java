@@ -18,6 +18,6 @@ public interface UserInfoService {
 
     UserInfo getUserById(Integer userId);
 
-    public Page<UserInfo> listAll(int pageNum, String sortField, String sortDir);
+    public Page<UserInfo> listAll(int pageNo, int pageNum, String sortField, String sortDir);
 
 }
