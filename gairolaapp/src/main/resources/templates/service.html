@@ -8,9 +8,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-       <!-- <script src="/js/datatable.js"></script>-->
+       <!-- <script src="js/datatable.js"></script>    -->   
+
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
@@ -40,18 +42,22 @@
             </tfoot>
         </table>
         <script>
-			$(document).ready(function() {
-				$("#employeesTable").DataTable({
-                      ajax : '/emp/employees',
-                 "aoColumns": [
+$(document).ready( function () {
+
+       var table = $('#employeesTable').DataTable({
+           "sAjaxSource": "/datatable/employees",
+           "sAjaxDataProp": "",
+             "aoColumns": [
                { "mData": "id"},
                { "mData": "firstName" },
                  { "mData": "lastName" },
-                 { "mData": "email" }
-    				]
-				});
-			})
-		</script>  
+                 { "mData": "email" }                 
+           ]
+          
+    })
+});
+
+        </script>       
 
 </div>
 </body>

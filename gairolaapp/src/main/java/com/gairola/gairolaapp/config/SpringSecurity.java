@@ -51,10 +51,8 @@ public class SpringSecurity {
                                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/main/register/**")
                                                 .permitAll()
                                                 .requestMatchers("/main/index").permitAll()
-                                                // .requestMatchers("/main/service").permitAll()
-                                                // .requestMatchers("/main/home").permitAll()
-                                                // .requestMatchers("/data/**").permitAll()
                                                 .requestMatchers("/data/**").hasRole("ADMIN")
+                                                .requestMatchers("/datatable/**").hasRole("ADMIN")
                                                 .requestMatchers("/emp/**").hasRole("ADMIN")
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                                 .requestMatchers("/main/users").hasRole("ADMIN")
@@ -66,6 +64,7 @@ public class SpringSecurity {
                                                                 .loginPage("/main/login")
                                                                 .loginProcessingUrl("/main/login")
                                                                 .defaultSuccessUrl("/main/users")
+                                                                .failureUrl("/main/login?error=true")
                                                                 .permitAll())
                                 .logout(
                                                 logout -> logout
@@ -73,9 +72,9 @@ public class SpringSecurity {
                                                                                 new AntPathRequestMatcher(
                                                                                                 "/main/logout"))
                                                                 .permitAll()
-                                // .and()
-                                // .exceptionHandling()
-                                // .accessDeniedHandler(accessDeniedHandler)
+                                                                .invalidateHttpSession(true)
+                                                                .deleteCookies("JSESSIONID")
+
                                 );
 
                 return http.build();
