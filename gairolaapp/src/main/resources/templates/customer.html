@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+        
+               var table = $('#customerTable').DataTable({
+                   "sAjaxSource": "/datatable/customer",
+                   "sAjaxDataProp": "",
+                     "columns": [
+                        { "mData": "id"},
+                       { "mData": "firstName" },
+                         { "mData": "lastName" },
+                         { "mData": "emailAddress" }  ,
+                           { "mData": "city" },
+                             { "mData": "country" },
+                               { "mData": "phoneNumber" },
+                            /*   {
+            data: null,
+            defaultContent: '<a href="" class="remove">Delete</a>',
+            orderable: false
+        }    */                          
+                         
+                   ]
+                  
+            })
+        });
+
+       
+
+               </script> 
+      
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+ 
+       
+    <h1 class="pb-2 border-bottom row">
+        <span class="col-sm-6 pb-4">Customer List</span>
+        <span class="col-sm-6 text-sm-right pb-4">
+            <a href="/customer/create" class="btn btn-primary btn-outline-primary d-block d-sm-inline-block">Create Customer</a>
+        </span>
+    </h1>
+
+
+    <div class="alert alert-info" th:if="${message}">
+        <h3 th:text="${message}"></h3>
+    </div>
+	   <div class="mt-5">
+             <table id="customerTable" class="table table-striped table-bordered" style="width:100%">
+          
+           <!-- Header Table -->
+           <thead>
+                <tr>
+                 <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Phone</th>
+                    
+                </tr>
+            </thead>
+            <!-- Footer Table -->
+            <tfoot>
+                <tr>
+                   <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Phone</th>
+                    
+                </tr>
+               </tfoot>            
+           </table>       
+           <div>&nbsp;</div>
+	<div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
+	<div>&nbsp;</div>
+	<div th:if="${totalPages > 1}">
+		Total Items: [[${totalItems}]]
+		&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{'/customer/page/1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+		<span th:unless="${currentPage > 1}">First</span>
+		&nbsp;&nbsp;
+		
+		<a th:if="${currentPage > 1}" th:href="@{'/customer/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+		<span th:unless="${currentPage > 1}">Previous</span>
+		
+		&nbsp;&nbsp;
+		
+		<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+			<a th:if="${currentPage != i}" th:href="@{'/customer/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+			<span th:unless="${currentPage != i}">[[${i}]]</span>
+			&nbsp;
+		</span>
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/customer/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+		<span th:unless="${currentPage < totalPages}">Next</span>
+		&nbsp;&nbsp;
+		
+		<a th:if="${currentPage < totalPages}" th:href="@{'/customer/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+		<span th:unless="${currentPage < totalPages}">Last</span>
+	</div>    
+    </div>
+
+</div>
+</body>
+</html>

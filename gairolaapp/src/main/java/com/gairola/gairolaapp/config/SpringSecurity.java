@@ -54,6 +54,7 @@ public class SpringSecurity {
                                                 .requestMatchers("/data/**").hasRole("ADMIN")
                                                 .requestMatchers("/datatable/**").hasRole("ADMIN")
                                                 .requestMatchers("/emp/**").hasRole("ADMIN")
+                                                .requestMatchers("/customer/**").hasRole("ADMIN")
                                                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                                                 .requestMatchers("/main/users").hasRole("ADMIN")
                                                 .requestMatchers("/", "/js/**", "/css/**", "/img/**", "/webjars/**")
@@ -63,8 +64,8 @@ public class SpringSecurity {
                                                 form -> form
                                                                 .loginPage("/main/login")
                                                                 .loginProcessingUrl("/main/login")
-                                                                .defaultSuccessUrl("/main/users")
-                                                                .failureUrl("/main/login?error=true")
+                                                                .defaultSuccessUrl("/main/welcome")
+                                                                .failureUrl("/main/login?error")
                                                                 .permitAll())
                                 .logout(
                                                 logout -> logout

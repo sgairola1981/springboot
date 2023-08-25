@@ -31,7 +31,9 @@ public class UserController {
     public String getUsers(Model model) {
         List<UserInfo> users = userService.getUsers();
         model.addAttribute("users", users);
+
         model.addAttribute("userInfo", new UserInfo());
+        model.addAttribute("currentPage", 1);
         return "userform";
     }
 
@@ -41,6 +43,7 @@ public class UserController {
         List<UserInfo> users = userService.getUsers();
         model.addAttribute("users", users);
         model.addAttribute("userInfo", new UserInfo());
+        model.addAttribute("currentPage", 1);
         return "userform";
     }
 
@@ -54,7 +57,7 @@ public class UserController {
         } else {
             model.addAttribute("userInfo", new UserInfo());
         }
-
+        model.addAttribute("currentPage", 1);
         return "userform";
     }
 
@@ -65,6 +68,7 @@ public class UserController {
         List<UserInfo> users = userService.getUsers();
         model.addAttribute("users", users);
         model.addAttribute("userInfo", new UserInfo());
+        model.addAttribute("currentPage", 1);
         return "userform";
 
     }

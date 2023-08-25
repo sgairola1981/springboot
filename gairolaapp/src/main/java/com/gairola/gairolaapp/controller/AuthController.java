@@ -66,11 +66,26 @@ public class AuthController {
         return "service";
     }
 
+    @Operation(summary = "This is to call service")
+    @GetMapping("/welcome")
+    public String WelcomeForm() throws URISyntaxException {
+
+        return "welcome";
+    }
+
+    @Operation(summary = "This is to call service")
+    @GetMapping("/customer")
+    public String CustomerData() throws URISyntaxException {
+
+        return "customer";
+    }
+
     @Operation(summary = "This is to use to home page")
     @GetMapping("/home")
     public String ServiceHome() {
         // ResponseEntity<Book> responseEntity = restTemplate
         // .getForEntity("http://localhost:9000/book/501", Book.class);
+        System.out.println("KKKKKKKKKKKKKKKKKKKK ServiceHome");
 
         Book[] books = restTemplate.getForObject("http://localhost:9000/book/all",
                 Book[].class);
@@ -103,7 +118,8 @@ public class AuthController {
     @Operation(summary = "This is to Regester a new user in the database")
     @GetMapping("/user")
     public String userForm(Model model) {
-
+        model.addAttribute("currentPage", 1);
+        System.out.println("CCCCCCCCCCCCCCCCCC userForm");
         return "userform";
     }
 
@@ -134,7 +150,9 @@ public class AuthController {
     @GetMapping("/users")
     public String listRegisteredUsers(Model model) {
         List<UserDto> users = userService.findAllUsers();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA users  List");
         model.addAttribute("users", users);
+        model.addAttribute("currentPage", 1);
         return "users";
 
     }

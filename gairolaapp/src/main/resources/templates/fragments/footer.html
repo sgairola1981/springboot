@@ -4,16 +4,16 @@
 <body>
   <th:block th:fragment="footer">
 	<footer>
-        <div class="container">
-            <p>
-                 &copy; Memorynotfound.com
-                <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-                    | Logged user: <span sec:authentication="name"></span> |
-                    Roles: <span sec:authentication="principal.authorities"></span> |
-                    <a th:href="@{/main/logout}">Sign Out</a>
-                </span>
-                   </p>
-        </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+              <p class="text-center text-muted">&copy;
+                  <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span>
+                  <a href="https://tucanoo.com">Gairola Solutions Ltd.</a>
+              </p>
+          </div>
+      </div>
     </footer>
   </th:block>
   </body>
