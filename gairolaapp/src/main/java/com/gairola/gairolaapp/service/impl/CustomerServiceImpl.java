@@ -52,4 +52,14 @@ public class CustomerServiceImpl implements CustomerService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.repo.findAll(pageable);
     }
+
+    public void saveOrUpdate(Customer customer) {
+        repo.save(customer);
+    }
+
+    @Override
+    public Optional<Customer> getCustomerByIdOpt(long id) {
+        return repo.findById(id);
+
+    }
 }

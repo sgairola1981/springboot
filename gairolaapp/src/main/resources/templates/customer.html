@@ -22,19 +22,34 @@
                          { "mData": "emailAddress" }  ,
                            { "mData": "city" },
                              { "mData": "country" },
-                               { "mData": "phoneNumber" },
-                            /*   {
-            data: null,
-            defaultContent: '<a href="" class="remove">Delete</a>',
-            orderable: false
-        }    */                          
+                               { "mData": "phoneNumber" }, 
+                                              
+                                
                          
-                   ]
+                   ],
+                   "columnDefs": [{
+            	   targets: 7,
+            	   render: function(data, type, row, meta) {
+            		   return '<td><button class="btn btn-warning btn-sm" onclick="edit_book('+row.id+');">'
+                       +'<i class="glyphicon glyphicon-pencil"></i>Edit</button>'
+                       +'&nbsp&nbsp'
+                       +'<button class="btn btn-danger btn-sm" onclick="delete_book('+row.id+');">' 
+                       +'<i class="glyphicon glyphicon-remove"></i>Delete</button><td>'
+            	   }
+               }]
                   
             })
         });
 
-       
+        function edit_book(id){
+               window.location.href ="/customer/edit/"+id;
+           
+        	
+         }
+
+         function delete_book(id){
+            window.location.href ="/customer/edit/"+id;
+           }
 
                </script> 
       
@@ -67,6 +82,7 @@
                 <th>City</th>
                 <th>Country</th>
                 <th>Phone</th>
+                <th>Action</th>
                     
                 </tr>
             </thead>
@@ -80,6 +96,7 @@
                 <th>City</th>
                 <th>Country</th>
                 <th>Phone</th>
+                <th>Action</th>
                     
                 </tr>
                </tfoot>            
@@ -87,7 +104,7 @@
            <div>&nbsp;</div>
 	<div><i>Sorted by [[${sortField}]] in [[${sortDir}]] order</i></div>
 	<div>&nbsp;</div>
-	<div th:if="${totalPages > 1}">
+	<!--<div th:if="${totalPages > 1}">
 		Total Items: [[${totalItems}]]
 		&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
 		
@@ -112,7 +129,8 @@
 		
 		<a th:if="${currentPage < totalPages}" th:href="@{'/customer/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
 		<span th:unless="${currentPage < totalPages}">Last</span>
-	</div>    
+	</div>
+-->    
     </div>
 
 </div>

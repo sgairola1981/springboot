@@ -21,8 +21,8 @@
     
     
         <div class="mt-5 card card-body bg-light">
-    
-            <form action="/customer/update" th:object="${customerInstance}" class="form" method="post">
+                
+            <form action="/customer/updatedata" th:object="${customerInstance}" class="form" method="post">
     
                 <div class="alert alert-danger" th:if="${! #fields.errors('all').isEmpty()}">
                     <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">

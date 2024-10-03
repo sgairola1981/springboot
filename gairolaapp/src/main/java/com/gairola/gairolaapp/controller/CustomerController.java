@@ -1,17 +1,22 @@
 package com.gairola.gairolaapp.controller;
 
 import com.gairola.gairolaapp.entity.Customer;
+import com.gairola.gairolaapp.entity.Employee;
+import com.gairola.gairolaapp.entity.UserInfo;
 import com.gairola.gairolaapp.repository.CustomerRepository;
 import com.gairola.gairolaapp.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -43,18 +48,11 @@ public class CustomerController {
         return "/editcustomer.html";
     }
 
-    @PostMapping("/update/{id}")
-    public String update(@PathVariable(value = "id") long id,
-            @Valid @ModelAttribute("customerInstance") Customer customerInstance,
-            BindingResult bindingResult,
-            Model model,
-            RedirectAttributes atts) {
-        customerInstance = customerService.getCustomerById(id);
-
-        // set employee as a model attribute to pre-populate the form
+    @RequestMapping(value = "/updatedata", method = RequestMethod.POST)
+    public String createUser(Model model, @ModelAttribute Customer customerInstance) {
+        customerService.saveCustomer(customerInstance);
         model.addAttribute("customer", customerInstance);
         return findPaginated(1, "firstName", "asc", model);
-
     }
 
     @GetMapping("/create")
@@ -75,11 +73,10 @@ public class CustomerController {
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestParam Long id, RedirectAttributes atts) {
+    public String delete(@RequestParam Long id, RedirectAttributes atts, Model model) {
         this.customerService.deleteCustomerById(id);
         atts.addFlashAttribute("message", "Customer deleted.");
-
-        return "redirect:/customer/";
+        return findPaginated(1, "firstName", "asc", model);
     }
 
     @GetMapping("/page/{pageNo}")

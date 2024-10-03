@@ -1,0 +1,92 @@
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters.enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"   
+
+
+resilience4j.circuitbreaker:
+    instances:
+         bookservice:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 3
+            slidingWindowType: TIME_BASED
+            minimumNumberOfCalls: 20
+            waitDurationInOpenState: 50s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+            recordFailurePredicate: io.github.robwin.exception.RecordFailurePredicate
+            
+resilience4j.retry:
+    instances:
+        bookservice:
+            maxAttempts: 3
+            waitDuration: 10s
+            enableExponentialBackoff: true
+            exponentialBackoffMultiplier: 2
+            retryExceptions:
+                - org.springframework.web.client.HttpServerErrorException
+                - java.io.IOException
+            ignoreExceptions:
+                - io.github.robwin.exception.BusinessException
+       
+springdoc:
+  swagger-ui:
+    syntaxHighlight:
+      activated: 'true'
+    enabled: 'true'
+    path: /swagger-ui.html
+    filter: 'false'
+    tryItOutEnabled: 'false'
+  packages-to-scan: com.gairola.gairolaapp.controller
+
+spring:
+  thymeleaf:
+    cache: 'false'
+    check-template: 'true'
+    prefix: classpath:/templates/
+    check-template-location: 'true'
+    suffix: .html
+    content-type: text/html
+    mode: HTML
+    encoding: UTF-8
+    enabled: 'true'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: 'true'
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: admin
+    username: root
+    url: jdbc:mysql://localhost:3306/spring?useSSL=false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  application:
+    name: Gairola
+api:
+  book:
+    baseurl: http://localhost:9000/book/
+bezkoder:
+  openapi:
+    prod-url: http://localhost:8889
+    dev-url: http://localhost:8889
+server:
+  port: '8889'
+
+             
+           
+
+
+
